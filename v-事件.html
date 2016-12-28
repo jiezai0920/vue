@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box">
+        <input type="button" value="按钮" v-on:click="add()">
+        <ul>
+            <li v-for="item in arr">{{item}}分</li>
+        </ul>
+    </div>
+
+    <script src="vue.js"></script>
+    <script type="text/javascript">
+    // vue事件和原生js事件是一样的
+        new Vue({
+            el:"#box",
+            data:{
+                arr:[99,88,67,90]
+            },
+            methods:{
+                add:function(){
+                    this.arr.push(parseInt(Math.random()*100))
+                }
+            }
+        })
+    </script>
+</body>
+</html>

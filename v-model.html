@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box">
+        <input type="text" v-model="msg">
+        <br>
+        {{msg}}
+        <br>
+        <!-- 带星号的方法是仅一次绑定 -->
+        {{*msg}}
+    </div>
+
+    <script src="vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el:"#box",
+            data:{
+                msg:"hello world"
+            }
+        })
+    </script>
+</body>
+</html>

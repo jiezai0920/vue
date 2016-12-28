@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box">
+        <input type="button" value="按钮" v-on:click="show()">
+        <div style="width:100px;height:100px;background: red;" v-show="a"></div>
+    </div>
+
+    <script src="vue.js"></script>
+    <script type="text/javascript">
+    // vue事件和原生js事件是一样的
+        new Vue({
+            el:"#box",
+            data:{
+                a:true
+            },
+            methods:{
+                show:function(){
+                    if(this.a){
+                        this.a=false;
+                    }else{
+                        this.a=true;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -5,6 +5,7 @@
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <script src="jquery.js"></script>
+    <script src="bootstrap.js"></script>
 </head>
 <body>
     <div class="container" id="box">
@@ -39,16 +40,16 @@
                 <td>{{item.uname}}</td>
                 <td>{{item.usex}}</td>
                 <td>{{item.uscore}}</td>
-                <td><button class="btn btn-primary" @click="dele($index)">删除</button></td>
+                <td><button class="btn btn-primary" data-toggle="modal" data-target="#layer" @click="del($index)">删除</button></td>
             </tr>
             <tr v-show="arr.length!=0">
                 <td colspan="5" class="text-center">
                     <button class="btn btn-success" @click="shouFail()">{{text}}</button>
                 </td>
             </tr>
-            <tr v-show="arr.length!=0">
+            <tr v-show="arr.length>1">
                 <td colspan="5" class="text-center">
-                    <button class="btn btn-danger" @click="deleAll()">全部删除</button>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#layer" @click="delAll()">全部删除</button>
                 </td>
             </tr>
             <tr v-show="arr.length==0">
@@ -57,7 +58,23 @@
                 </td>
             </tr>
         </table>
-
+        <!-- 模态框 -->
+        <div role="dialog" class="modal fade" id="layer">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;
+                        </button>
+                        <h4 class="modal-title">{{text2}}</h3>
+                    </div>
+                    <div class="modal-body text-right">
+                        <button class="btn btn-primary" data-dismiss="modal">取消</button>
+                        <button class="btn btn-success" data-dismiss="modal" @click="dele(nowIndex)">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -68,18 +85,14 @@
         new Vue({
             el:"#box",
             data:{
-                arr:[
-                    {uname:"李磊",usex:"男",uscore:99},
-                    {uname:"小红",usex:"女",uscore:100},
-                    {uname:"杰克",usex:"男",uscore:88},
-                    {uname:"韩梅梅",usex:"女",uscore:59},
-                    {uname:"小明",usex:"男",uscore:57}
-                    ],
+                arr:[],
                 name:"",
                 sex:"",
                 score:"",
                 text:"展示不及格的",
-                allArr:[]
+                text2:"",
+                allArr:[],
+                nowIndex:null//删除的下标
             },
             methods:{
                 add:function(){
@@ -103,10 +116,19 @@
                     }
                 },
                 dele:function(i){
-                    this.arr.splice(i,1)
+                    if(i==-2){
+                        this.arr=[];
+                    }else{
+                        this.arr.splice(i,1);
+                    }
                 },
-                deleAll:function(){
-                    this.arr=[];
+                del:function(i){
+                    this.nowIndex=i;
+                    this.text2="确认删除吗?";
+                },
+                delAll:function(){
+                    this.nowIndex=-2;
+                    this.text2="确认删除全部吗?";
                 },
                 shouFail:function(){
                     let arrFail=[];

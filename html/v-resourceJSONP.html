@@ -9,11 +9,8 @@
 </head>
 <body>
     <div id="box">
-<<<<<<< HEAD
-      <input type="text" v-model="t" @keyup="get($event)" @keydown.down="changeDown()" @keydown.up.prevent="changeUp()">
-=======
+
       <input type="text" v-model="t" @keyup="get()" @keydown.down="changeDown()" @keydown.up="changeUp()">
->>>>>>> origin/master
       <ul>
         <li v-for="value in myData" :class="{bg:$index==nowIndex}" >{{value}}</li>
       </ul>
@@ -31,16 +28,12 @@
               nowIndex:-1
             },
             methods:{
-<<<<<<< HEAD
               get:function(ev){
                 if(ev.keyCode==38||ev.keyCode==40)return;
                 if(ev.keyCode==13){
                   window.open("https://www.baidu.com/s?wd="+this.t);
                   this.t=""
                 }
-=======
-              get:function(){
->>>>>>> origin/master
                 this.$http.jsonp("https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",{
                   params: {
                       "wd":this.t
@@ -57,20 +50,14 @@
                 if(this.nowIndex==this.myData.length){
                   this.nowIndex=-1;
                 }
-<<<<<<< HEAD
                 this.t=this.myData[this.nowIndex];
-=======
->>>>>>> origin/master
               },
               changeUp:function(){
                 this.nowIndex--;
                 if(this.nowIndex==-2){
                   this.nowIndex=this.myData.length-1;
                 }
-<<<<<<< HEAD
                 this.t=this.myData[this.nowIndex];
-=======
->>>>>>> origin/master
               }
             }
         })

@@ -9,8 +9,7 @@
 </head>
 <body>
     <div id="box">
-
-      <input type="text" v-model="t" @keyup="get()" @keydown.down="changeDown()" @keydown.up="changeUp()">
+      <input type="text" v-model="t" @keyup="get($event)" @keydown.down="changeDown()" @keydown.up.prevent="changeUp()">
       <ul>
         <li v-for="value in myData" :class="{bg:$index==nowIndex}" >{{value}}</li>
       </ul>

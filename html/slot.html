@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>slot</title>
+</head>
+<body>
+	<h5>slot内容分发</h5>
+	<h5>为了让组件组合，需要使用一种方式来混合父组件的内容与子组件自己的模板，这个过程就叫做内容分发！</h5>
+	<h5>使用了特殊的slot元素作为原始内容的插槽！</h5>
+	<h5></h5>
+
+	<div id="parent">
+		<child>
+			<p slot='header'>{{message}}</p>
+			<p slot='footer'>2121321</p>
+		</child>
+	</div>
+
+	<div id="parent2">
+		<my-slot>
+			<p slot='username'>我是詹姆斯</p>
+			<p slot='userage'>俗称三旬老汉</p>
+		</my-slot>
+	</div>
+	
+	<!--作用域插槽的使用方式-->
+	<div id="d4">
+		<div class="parent">
+  			<child>
+			    <template scope="props">
+			      <span>hello from parent</span>
+			      <span>{{ props.text }}</span>
+			    </template>
+  			</child>
+		</div>
+	</div>
+	<script src="../js/vue2.0.js"></script>
+
+	<script>
+		//作用域插槽的使用方式
+		Vue.component('child',{
+			template:"<div class='child'><slot text='hello from child'></slot></div>"
+		});
+		var app = new Vue({
+			el:"#d4"
+		})
+		/*slot*/
+		Vue.component('my-slot',{
+			template:'<div><slot name="username"></slot><slot name="userage"></slot></div>'
+		})
+		var slot = new Vue({
+			el:"#parent2"
+		})
+		/*************************************************/
+		Vue.component('child' ,{
+			template: "<div><span>子组件内容</span><slot name='header'></slot><slot name='footer'></slot></div>"
+		})
+		var app = new Vue({
+			el:"#parent",
+			data:{
+				message:"内容分发"
+			}
+		});
+		/*
+			父组件需要在子组件内部放置一些dom,那么这些dom显示，或者不显示，在哪个地方，如何显示，需要使用slot进行内容分发。
+			默认情况下，如果在子组件内部插入DOM元素，那么该DOM 元素是不会显示的！
+			如果使用slot标签的话，可以将父组件放在子组件的内容，放置到子组件的template模板中指定的slot的位置！
+			具名slot：
+				父组件 slot="header"
+				子组件 name='header' 然后就会把对应标签放在对应的位置了！
+			作用域插槽：在子组件中，只要将数据传递到插槽 text=""  
+					  在父级中，具有特殊属性的scope的template	元素，是作用域插槽的模板，scope对应一个临时变量的值，该
+					  变量是一个对象，对象中包含传递的值！
+			动态组件：
+					
+		*/
+	</script>
+</body>
+</html>

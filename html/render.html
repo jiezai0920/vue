@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>render</title>
+	<style type="text/css">
+		.foo{width:200px;height:200px;border:1px solid;}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<child :level='level'>
+			<header slot='header'>这是头部内容</header>
+			<footer slot='footer'>这是尾部内容</footer>
+			<div slot='main'>这是主体内容区域</div>
+			<div>这是默认区域</div>
+		</child>
+	</div>
+	<div id="app2">
+		<my-component myProp ="app2"></my-component>
+	</div>
+	<script src="../js/vue2.0.js"></script>
+	<script type="text/javascript">
+		Vue.component('child', {
+		  render: function (createElement) {
+		    return createElement(
+		      'h' + this.level,   // tag name 标签名称
+		      this.$slots.default // 子组件中的阵列
+		    )
+		  },
+		  props: {
+		    level: {
+		      type: Number,
+		      required: true
+		    }
+		  }
+		})
+		var myTest = new Vue({
+			el:"#app",
+			data:function(){
+				return {
+					level:5
+				}
+			}
+		});
+
+
+
+		Vue.component('myComponent' , {
+			render:function(createElement){
+				return createElement('div',{
+					class:{
+						foo:true
+					},
+					style:{
+						color:'red',
+						fontSize:'14px'
+					},
+					attrs:{
+						data:"自定义属性1"
+					},
+					props:{
+						myProp:"app2"
+					},
+					domProps:{
+						innerHTML:"this is demo "
+					},
+					on:{
+						click:this.handler
+					}
+				},{})
+			},
+			data:function(){
+				return {
+					counter:0
+				}
+			},
+			methods:{
+				handler:function(){
+					this.counter++;
+					console.log(this.counter)
+				}
+			}
+		})
+		var app2 = new Vue({
+			el:"#app2",
+		})
+	</script>
+</body>
+</html>

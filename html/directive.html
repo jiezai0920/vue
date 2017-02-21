@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义指令</title>
+</head>
+<body>
+	<div id="d1" v-my-directive>{{msg}}</div>
+
+	<div id="d2" v-demo="{color:'red',text:'mytest'}">
+
+	</div>
+	<script src="../js/vue2.0.js"></script>
+	<script>
+		Vue.directive('demo',function(el , binding){
+			console.log(binding.value.color);
+			console.log(el);
+			console.log(binding.value.text);
+		})
+		var getColor = new Vue({
+			el:"#d2"
+		})
+		//自定义指令可以分为两种：
+			/*
+				1，一种通过Vue.directive的方式
+				2，另外一种是在组件内部进行定义
+					directives:{
+					}
+				函数简写的方式：
+					可以会在bind，和update钩子上做重复操作，并且不关心其他钩子函数，可以这样操作
+					Vue.directive('color' , function(el,binding){
+					})
+				对象字面量的方式：
+					如果指令需要多个值，可以传入一个Js的对象字面量；
+					<div v-demo='{name:smith , age:30}'></div>
+				自定义指令提供了5个钩子函数
+				bind:
+				inserted:
+				componentUpdate:
+				update:
+				unbind:
+			*/
+		Vue.directive('my-directive',{
+			bind:function(){
+				console.log('调用一次，指令第一次绑定到元素的时候调用~这个钩子函数可以定义在绑定的时候执行一次的初始化的动作')
+			},
+			inserted:function(el){
+				console.log("被绑定元素插入父节点的时候调用");
+			},
+			update:function(){
+				//被绑定的元素在更新模板的时候调用，不论绑定的值是否发生变化，通过比较更新前后的值，可以忽略不必要的更新
+				console.log("update");
+			},
+			componentUpdated:function(){
+				//被绑定元素所在模板完成一次更新调用
+				console.log("componentUpdate");
+			},
+			unbind:function(){
+				//指令和元素解绑的时候调用~
+			}
+		});
+		var myDir = new Vue({
+			el:"#d1",
+			data:function(){
+				return {
+					msg:'hello world'//动态修改msg的值，  update 和 componentUpdated 会执行
+				}
+			}
+		})
+	</script>
+</body>
+</html>
